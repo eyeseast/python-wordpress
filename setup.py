@@ -13,6 +13,7 @@ setup(
     py_modules = ['wordpress'],
     url = "https://github.com/eyeseast/python-wordpress",
     license = "MIT",
+    install_requires = ['httplib2'],
     classifiers = [
         'Environment :: Web Environment',
         "Intended Audience :: Developers",
