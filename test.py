@@ -40,6 +40,15 @@ class WordPressTest(unittest.TestCase):
         result = self.wp.get_category_index()
         self.check_response(result, 'http://localhost:8888/wordpress/?json=get_category_index&dev=1')
     
+    def test_bad_method(self):
+        """Trying to call something that isn't a real method should raise AttributeError"""
+        # for the record, this is an odd way to test this
+        try:
+            self.wp.do_something_bad
+            self.fail()
+        except AttributeError:
+            pass
+    
 
 if __name__ == '__main__':
     unittest.main()
