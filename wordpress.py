@@ -4,6 +4,10 @@ A Python client for the WordPress JSON API
 # This library is aimed at easier communication between
 # Python-based projects and a wordpress installation.
 
+__author__ = "Chris Amico (eyeseast@gmail.com)"
+__version__ = "0.1"
+__license__ = "MIT"
+
 import httplib2
 import os
 import urllib
