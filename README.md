@@ -17,4 +17,10 @@ Usage:
     >>> wp = WordPress('http://example.com/blog/')
     >>> posts = wp.get_recent_posts()
 
-Tests are written with the assumption of a WordPress blog running on [MAMP][2] at http://127.0.0.1/wordpress/.
+For now, this only covers the *read* portions of the API under the `core` controller. See the [WordPress JSON API documentation][2] for details.
+
+  [2]: http://wordpress.org/extend/plugins/json-api/other_notes/
+
+Tests are written with the assumption of a WordPress blog running on [MAMP][3] at http://127.0.0.1/wordpress/.
+
+  [3]: http://www.mamp.info/en/index.html "MAMP!"
