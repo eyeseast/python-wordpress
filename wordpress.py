@@ -64,6 +64,9 @@ class WordPress(object):
             self.blog_url += "?"
         self._http = httplib2.Http(cache)
     
+    def __repr__(self):
+        return "<WordPress: %s>" % self.blog_url.rstrip('?')
+    
     # fetch does most of the dirty work. Pass in an API method and
     # some kwargs and it grabs, parses and returns some useful JSON
     def fetch(self, method, **kwargs):
