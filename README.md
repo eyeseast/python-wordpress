@@ -21,6 +21,8 @@ For now, this only covers the *read* portions of the API under the `core` contro
 
   [2]: http://wordpress.org/extend/plugins/json-api/other_notes/
 
-Tests are written with the assumption of a WordPress blog running on [MAMP][3] at http://127.0.0.1/wordpress/.
+Tests assume a WordPress blog running on [MAMP][3] at http://localhost:8888/wordpress, but you can change that by setting `WORDPRESS_BLOG_URL` as an environment variable, like so:
+
+    WORDPRESS_BLOG_URL=http://wordpress.local.host python test.py
 
   [3]: http://www.mamp.info/en/index.html "MAMP!"
