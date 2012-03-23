@@ -58,7 +58,7 @@ class WordPress(object):
     The main wrapper
     """
     def __init__(self, blog_url, cache='.cache'):
-        self.dev = 1
+        self.dev = 0
         self.blog_url = blog_url
         if not self.blog_url.endswith('?'):
             self.blog_url += "?"
