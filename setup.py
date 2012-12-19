@@ -1,4 +1,3 @@
-import wordpress
 from distutils.core import setup
 
 readme = open('README.md').read()
@@ -7,7 +6,7 @@ setup(
     name = "python-wordpress",
     description = "A Python client for the WordPress JSON API plugin",
     long_description = readme,
-    version = wordpress.__version__,
+    version = "0.1.2",
     author = "Chris Amico",
     author_email = "eyeseast@gmail.com",
     py_modules = ['wordpress'],
