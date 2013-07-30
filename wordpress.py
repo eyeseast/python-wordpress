@@ -67,14 +67,20 @@ class WordPress(object):
     def __repr__(self):
         return "<WordPress: %s>" % self.blog_url.rstrip('?')
     
-    # fetch does most of the dirty work. Pass in an API method and
+    # method does most of the dirty work. Pass in an API method and
     # some kwargs and it grabs, parses and returns some useful JSON
-    def fetch(self, method, **kwargs):
-        "Grab, parse and return the actual response"
+    def method(self, method_name, **kwargs):
+        """
+        Build a URL for this method + kwargs, then fetch it.
+        """
         kwargs.setdefault('dev', self.dev)
-        kwargs['json'] = method
+        kwargs['json'] = method_name
         url = self.blog_url + urllib.urlencode(kwargs)
-        
+
+        return self.fetch(url)
+    
+    def fetch(self, url):
+        "Grab, parse and return the actual response"
         r, c = self._http.request(url)
         c = json.loads(c)
         if c.get('status', '').lower() == "error" or "error" in c:
@@ -91,28 +97,20 @@ class WordPress(object):
         url = urlparse.urljoin(self.blog_url, path) + '?'
         url += urllib.urlencode({'json': 1})
 
-        r, c = self._http.request(url)
-        c = json.loads(c)
-        if c.get('status', '').lower() == "error" or "error" in c:
-            raise WordPressError(c.get('error'))
-        
-        if DEBUG:
-            c['_url'] = url
-        return c
-
+        return self.fetch(url)
         
     # The WordPress JSON API is really simple. Give it a named method
     # in a query string--`?json=get_recent_posts`--and it returns JSON. 
     # Since all we're doing is passing methods and arguments, there's
     # little point re-defining those methods in Python
-    def __getattr__(self, method):
+    def __getattr__(self, method_name):
         """
         Return a callable API method if `method` is in self._methods
         """
-        if method in DEFAULT_METHODS:
+        if method_name in DEFAULT_METHODS:
             def _api_method(**kwargs):
-                return self.fetch(method, **kwargs)
-            _api_method.__name__ = method
+                return self.method(method_name, **kwargs)
+            _api_method.__name__ = method_name
             return _api_method
         else:
             raise AttributeError
