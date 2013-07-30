@@ -30,7 +30,9 @@ class WordPressTest(unittest.TestCase):
         self.check_response(result, '%s/api/get_recent_posts/?dev=1' % self.blog_url)
     
     def test_get_post(self):
-        """Test getting a single post"""
+        """
+        Test getting a single post
+        """
         # don't assume there's a post with ID 1
         # this assumes get_recent_posts works, will raise KeyError if not
         results = self.wp.get_recent_posts(count=3)
@@ -40,15 +42,26 @@ class WordPressTest(unittest.TestCase):
             self.check_response(post, '%s/?json=get_post&id=%s&dev=1' % (self.blog_url, ID))
         
     def test_get_categories(self):
-        """Test getting all active categories"""
+        """
+        Test getting all active categories
+        """
         result = self.wp.get_category_index()
         self.check_response(result, '%s/?json=get_category_index&dev=1' % self.blog_url)
     
     def test_bad_method(self):
-        """Trying to call something that isn't a real method should raise AttributeError"""
+        """
+        Trying to call something that isn't a real method should raise AttributeError
+        """
         # for the record, this is an odd way to test this
         with self.assertRaises(AttributeError):
             self.wp.do_something_bad
+
+    def test_proxy(self):
+        """
+        WordPress should return the JSON version of any path.
+        """
+        result = self.wp.proxy('/')
+        self.check_response(result, '%s/?json=1' % self.blog_url)
     
 
 if __name__ == '__main__':

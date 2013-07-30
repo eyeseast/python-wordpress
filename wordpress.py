@@ -83,6 +83,23 @@ class WordPress(object):
         if DEBUG:
             c['_url'] = url
         return c
+
+    def proxy(self, path):
+        """
+        Get the JSON version of the given path, joined with self.blog_url
+        """
+        url = urlparse.urljoin(self.blog_url, path) + '?'
+        url += urllib.urlencode({'json': 1})
+
+        r, c = self._http.request(url)
+        c = json.loads(c)
+        if c.get('status', '').lower() == "error" or "error" in c:
+            raise WordPressError(c.get('error'))
+        
+        if DEBUG:
+            c['_url'] = url
+        return c
+
         
     # The WordPress JSON API is really simple. Give it a named method
     # in a query string--`?json=get_recent_posts`--and it returns JSON. 
